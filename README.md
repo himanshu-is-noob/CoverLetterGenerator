@@ -1,4 +1,4 @@
-# ✉️ Kuple Cover Letter Maker
+# ✉️ SmartCover-AI
 
 AI-powered cover letter generator that transforms your CV into a professional, tailored cover letter in seconds — powered by **Google Gemini**.
 
@@ -77,9 +77,7 @@ src/
 └── index.css                # Global styles
 ```
 
-## 🌐 Internationalization
 
-The app supports **English** (`en`) and **Indonesian** (`id`) via a centralized translation dictionary in `src/utils/translations.ts`. All UI components receive translated strings through props. Switch languages instantly using the globe button in the header.
 
 ## 📝 How It Works
 
