@@ -26,11 +26,13 @@ function App() {
       "gemini-2.5-flash",
       "gemini-2.5-flash-001",
       "gemini-2.5-pro",
-      "gemini-pro"
+      "gemini-pro",
+      "gemini-1.5-flash",
+  "gemini-1.5-flash-8b",
     ];
     
     try {
-      console.log(import.meta.env.VITE_GEMINI_API_KEY)
+      
       const ai = new GoogleGenAI({ 
           apiKey: import.meta.env.VITE_GEMINI_API_KEY
        });
