@@ -6,26 +6,19 @@ export const Footer = ({ onGuideClick }: { onGuideClick: () => void }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-sm text-gray-500">
-            © {new Date().getFullYear()} SmartCover AI.
+            © {new Date().getFullYear()} HireReady
           </div>
           
           <div className="flex items-center gap-6">
-            <button 
+            {/* <button 
               onClick={onGuideClick}
               className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors"
             >
               <HelpCircle className="w-4 h-4" />
               How to get API Key?
-            </button>
+            </button> */}
             
-            <a 
-              href="https://github.com/quantumloops/AI-Career-Enhancement-Portal-FinalYear" 
-              target="_blank" 
-              rel="noreferrer"
-              className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors"
-            >
-              GitHub
-            </a>
+            
           </div>
         </div>
       </div>

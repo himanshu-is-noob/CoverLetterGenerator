@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, FileText, Check, AlertCircle, Sparkles, Building2, Key, Paperclip, Trash2 } from 'lucide-react';
+import { Upload, FileText, Check, AlertCircle, Sparkles, Building2, Paperclip, Trash2 , CircleUserRound , ClipboardList } from 'lucide-react';
 import * as pdfjsLib from 'pdfjs-dist';
 
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
@@ -9,7 +9,7 @@ import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 interface GeneratorFormProps {
-  onGenerate: (data: { companyName: string; cvText: string; apiKey: string; language: string; supportingDocs: File[]; customPrompt: string; skills: string; }) => void;
+  onGenerate: (data: { companyName: string; companyJobRole:string; companyJobDescription : string ; cvText: string; language: string; supportingDocs: File[]; customPrompt: string; skills: string; }) => void;
   isLoading: boolean;
   error?: string | null;
   t: {
@@ -18,6 +18,8 @@ interface GeneratorFormProps {
       title: string;
       subtitle: string;
       companyPlaceholder: string;
+      companyJobRole:string;
+      companyJobDescription:string ;
       next: string;
     };
     step2: {
@@ -52,16 +54,19 @@ interface GeneratorFormProps {
   };
 }
 
+
 export const GeneratorForm = ({ onGenerate, isLoading, error, t }: GeneratorFormProps) => {
   const [step, setStep] = useState(1);
   const [companyName, setCompanyName] = useState('');
+  const [companyJobRole , setcompanyJobRole] = useState('');
+  const [companyJobDescription , setcompanyJobDescription] = useState('');
  const language = 'English';
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [supportingDocs, setSupportingDocs] = useState<File[]>([]);
   const [skills, setSkills] = useState('');
-  const [apiKey, setApiKey] = useState('');
   const [customPrompt, setCustomPrompt] = useState('');
   const [fileError, setFileError] = useState<string | null>(null);
+  
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -102,11 +107,11 @@ export const GeneratorForm = ({ onGenerate, isLoading, error, t }: GeneratorForm
   };
 
   const handleSubmit = async () => {
-    if (!cvFile || !companyName || !apiKey) return;
+    if (!cvFile || !companyName) return;
 
     try {
       const text = await extractTextFromPDF(cvFile);
-      onGenerate({ companyName, cvText: text, apiKey, language, supportingDocs, customPrompt, skills });
+      onGenerate({ companyName, companyJobRole , companyJobDescription, cvText: text, language, supportingDocs, customPrompt, skills });
     } catch {
       setFileError(t.errors.readError);
     }
@@ -143,10 +148,10 @@ export const GeneratorForm = ({ onGenerate, isLoading, error, t }: GeneratorForm
           >
             <div className="text-center">
               <h2 className="text-2xl font-bold text-gray-900">{t.step1.title}</h2>
-              <p className="text-gray-500">{t.step1.subtitle}</p>
+              <p className="text-gray-500 mt-1">{t.step1.subtitle}</p>
             </div>
             
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <div className="relative">
                 <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
@@ -158,26 +163,71 @@ export const GeneratorForm = ({ onGenerate, isLoading, error, t }: GeneratorForm
                 />
               </div>
 
-               {/* <div className="grid grid-cols-1 gap-4">
-                <div className="relative">
-                  <select
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value)}
-                    className="w-full px-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none appearance-none"
-                  >
-                    <option value="English">English</option>
-                    <option value="Indonesian">Indonesian</option>
-                  </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
-                    ▼
-                  </div>
-                </div>
-              </div> */}
+              <div>
+                <CircleUserRound className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  value={companyJobRole}
+                  onChange={(e) => setcompanyJobRole(e.target.value)}
+                  placeholder={t.step1.companyJobRole}
+                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none text-lg"
+                />
+              </div>
+
+              <div>
+                <ClipboardList className="absolute left-4 top-4 text-gray-400 w-5 h-5"/>
+                <textarea
+                  value={companyJobDescription}
+                  onChange={(e) => setcompanyJobDescription(e.target.value)}
+                  placeholder={t.step1.companyJobDescription}
+                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none text-lg"
+                />
+              </div>
+            </div> */}
+
+            <div className="space-y-4">
+
+            {/* Company Name */}
+            <div className="relative">
+              <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                placeholder={t.step1.companyPlaceholder}
+                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none text-lg"
+              />
             </div>
+
+            {/* Job Role */}
+            <div className="relative">
+              <CircleUserRound className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                value={companyJobRole}
+                onChange={(e) => setcompanyJobRole(e.target.value)}
+                placeholder={t.step1.companyJobRole}
+                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none text-lg"
+              />
+            </div>
+
+            {/* Job Description */}
+            <div className="relative">
+              <ClipboardList className="absolute left-4 top-4 text-gray-400 w-5 h-5" />
+              <textarea
+                value={companyJobDescription}
+                onChange={(e) => setcompanyJobDescription(e.target.value)}
+                placeholder={t.step1.companyJobDescription}
+                rows={4}
+                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none text-lg resize-none"
+              />
+            </div>
+
+          </div>
 
             <button
               onClick={nextStep}
-              disabled={!companyName}
+              disabled={!companyName || !companyJobRole}
               className="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               {t.step1.next}
@@ -249,18 +299,19 @@ export const GeneratorForm = ({ onGenerate, isLoading, error, t }: GeneratorForm
 
 
               {/* Skills / Description Input */}
-<div className="space-y-2">
-  <label className="text-sm font-medium text-gray-700 ml-1">
-    Skills / Description (Optional)
-  </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 ml-1">
+                  Skills / Description (Optional)
+                </label>
 
-  <textarea
-    value={skills}
-    onChange={(e) => setSkills(e.target.value)}
-    placeholder="Example: React, Node.js, Final Year Project, Internship at TCS..."
-    className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none h-28 resize-none text-sm"
-  />
-</div>
+                <textarea
+                  value={skills}
+                  onChange={(e) => setSkills(e.target.value)}
+                  placeholder="Example: React, Node.js, Final Year Project, Internship at TCS..."
+                  className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none h-28 resize-none text-sm"
+                />
+              </div>
+
               
               {/* List of supporting docs */}
               {supportingDocs.length > 0 && (
@@ -326,16 +377,6 @@ export const GeneratorForm = ({ onGenerate, isLoading, error, t }: GeneratorForm
               <p>{t.step3.warning}</p>
             </div>
 
-            <div className="relative">
-              <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder={t.step3.placeholder}
-                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
-              />
-            </div>
             
             <div className="relative">
               <div className="text-center mb-2">
@@ -363,9 +404,12 @@ export const GeneratorForm = ({ onGenerate, isLoading, error, t }: GeneratorForm
               >
                 {t.step3.back}
               </button>
+              
+
+              
               <button
                 onClick={handleSubmit}
-                disabled={!apiKey || isLoading}
+                disabled={isLoading}
                 className="flex-1 py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
               >
                 {isLoading ? (
@@ -381,9 +425,6 @@ export const GeneratorForm = ({ onGenerate, isLoading, error, t }: GeneratorForm
                 )}
               </button>
             </div>
-             <p className="text-center text-xs text-gray-400 mt-4">
-              {t.step3.noKey} <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline">{t.step3.getKey}</a>
-            </p>
           </motion.div>
         )}
       </AnimatePresence>

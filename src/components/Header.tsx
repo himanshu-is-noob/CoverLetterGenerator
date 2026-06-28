@@ -1,4 +1,4 @@
-import { FileText, Sparkles } from 'lucide-react';
+import { FileText, Image, Sparkles } from 'lucide-react';
 import { translations } from '../utils/translations';
 
 // interface HeaderProps {
@@ -14,8 +14,15 @@ export const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.location.reload()}>
-            <div className="p-1.5 md:p-2 bg-indigo-600 rounded-lg">
-              <FileText className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            <div className="p-1.5 md:p-2">
+              {/* <FileText className="w-5 h-5 md:w-6 md:h-6 text-white" /> */}
+              <img
+            src="/logo.png"
+            alt="HireReady logo"
+            height={40}
+            width={40}
+            className="rounded-xl"
+          />
             </div>
             <span className="text-lg md:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 truncate max-w-[150px] md:max-w-none">
               {t.title}
@@ -29,15 +36,15 @@ export const Header = () => {
               <Globe className="w-3.5 h-3.5" />
               {currentLang.toUpperCase()}
             </button> */}
-            <a 
+            {/* <a 
               href="https://github.com/quantumloops/AI-Career-Enhancement-Portal-FinalYear" 
               target="_blank" 
               rel="noreferrer"
               className="hidden md:block text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors"
             >
               {t.github}
-            </a>
-            <button className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-full transition-all hover:shadow-lg hover:shadow-indigo-500/30">
+            </a> */}
+            <button className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-full transition-all hover:shadow-lg hover:shadow-indigo-500/30" onClick={() => window.location.reload()}>
               <Sparkles className="w-3 h-3 md:w-4 md:h-4" />
               {t.getStarted}
             </button>

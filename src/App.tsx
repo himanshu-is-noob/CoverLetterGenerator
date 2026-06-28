@@ -18,7 +18,7 @@ function App() {
 
   const t = translations[currentLang];
 
-  const generateCoverLetter = async ({ companyName, cvText, apiKey, language, supportingDocs, customPrompt,skills }: { companyName: string; cvText: string; apiKey: string; language: string; supportingDocs: File[]; customPrompt: string; skills: string }) => {
+  const generateCoverLetter = async ({ companyName,companyJobRole,companyJobDescription,cvText, language, supportingDocs, customPrompt,skills }: { companyName: string; companyJobRole:string; companyJobDescription:string; cvText: string; language: string; supportingDocs: File[]; customPrompt: string; skills: string }) => {
     setIsLoading(true);
     setError(null);
     setSupportingDocs(supportingDocs);
@@ -30,7 +30,10 @@ function App() {
     ];
     
     try {
-      const ai = new GoogleGenAI({ apiKey });
+      console.log(import.meta.env.VITE_GEMINI_API_KEY)
+      const ai = new GoogleGenAI({ 
+          apiKey: import.meta.env.VITE_GEMINI_API_KEY
+       });
       let lastError = null;
 
       for (const modelName of MODELS_TO_TRY) {
@@ -46,7 +49,7 @@ const todayStr = today.toLocaleDateString('en-US', {
 });
 
           const prompt = `
-            Act as a professional resume writer. I need a cover letter for a job application to ${companyName}.
+            Act as a professional resume writer. I need a ATS Friendly cover letter for a job application to ${companyName}.
             
             Here is my CV content:
             ${cvText}
@@ -63,7 +66,7 @@ const todayStr = today.toLocaleDateString('en-US', {
             Requirements:
             1. Professional and engaging tone.
             2. Language: Write the cover letter in ${language}.
-            3. Highlight relevant skills from the CV that match a typical role at ${companyName}.
+            3. Highlight relevant skills from the CV that match a typical role at ${companyName} for ${companyJobRole} role and the job description is : ${companyJobDescription}
             4. Structure: 
                - Header: Include Name, Email, Phone, LinkedIn/Portfolio only if present in CV. **DO NOT include placeholders like [Your Address] or [City, State]. If address is missing, skip it.**
                - Date: ${todayStr}.
