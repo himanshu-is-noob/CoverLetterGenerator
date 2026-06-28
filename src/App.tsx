@@ -114,7 +114,7 @@ const todayStr = today.toLocaleDateString('en-US', {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa] flex flex-col">
+    <div className="min-h-screen  bg-[#fafafa] flex flex-col">
       <Header />
       
       <main className="flex-grow pt-20 px-4">
@@ -162,7 +162,7 @@ const todayStr = today.toLocaleDateString('en-US', {
         )}
       </main>
       
-      <Footer onGuideClick={() => setView('guide')} />
+      <Footer />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { FileText, Image, Sparkles } from 'lucide-react';
+import {  Sparkles } from 'lucide-react';
 import { translations } from '../utils/translations';
 
 // interface HeaderProps {
